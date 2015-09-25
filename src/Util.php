@@ -9,12 +9,16 @@ class Util
 
     static function debug()
     {
-        echo "<pre>\r\n";
-        array_map(function ($x) {
-            print_r($x);
-            echo "\r\n<br />\r\n";
-        }, func_get_args());
-        die;
+        echo "<meta charset='UTF-8'><pre style='padding:20px; background: #000000; color: #FFFFFF;'>\r\n";
+        if (func_num_args()) {
+            foreach (func_get_args() as $k => $v) {
+                echo "------- Debug $k -------<br/>\r\n";
+                print_r($v);
+                echo "\r\n<br/>";
+            }
+        }
+        echo '</pre>';
+        exit;
     }
 
 
