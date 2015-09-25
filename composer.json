@@ -1,0 +1,26 @@
+{
+    "name": "xxtime/component",
+    "type": "library",
+    "description": "xxtime component",
+    "keywords": ["xxtime", "uacool", "component"],
+    "homepage": "https://github.com/xxtime/component",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Joe Chu",
+            "email": "joe@xxtime.com",
+            "homepage": "http://www.xxtime.com",
+            "role": "Developer"
+        }
+    ],
+    "support": {
+        "email": "joe@xxtime.com",
+        "wiki": "http://wiki.xxtime.com"
+    },
+    "require": {
+        "php": ">=5.4.0"
+    },
+    "autoload": {
+        "psr-4": {"Xxtime\\": "src/"}
+    }
+}
