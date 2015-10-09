@@ -24,7 +24,7 @@
         "symfony/finder" : "v2.7.5"
     },
     "autoload": {
-        "files": [ "Develop/Debug.php" ],
+        "files": [ "src/Develop/Debug.php" ],
         "psr-4": {"Xxtime\\": "src/"}
     }
 }
