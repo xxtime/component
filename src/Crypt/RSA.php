@@ -10,6 +10,7 @@ class RSA
 
     public $privateKey = '';
 
+
     private $_block_length = 32;
 
 
