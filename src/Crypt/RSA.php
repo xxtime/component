@@ -5,38 +5,54 @@ namespace Xxtime\Crypt;
 class RSA
 {
 
-    public $publicKey = '';
+
+    private $_publicKey;
 
 
-    public $privateKey = '';
+    private $_privateKey;
 
 
-    private $_max_length = 32;
+    private $_max_length = 117;
 
 
-    private $_block_length = 128; // 默认1024位私钥block=128
+    private $_block_length = 128; // 默认支持1024位私钥
 
 
     public function setPublicKey($file_path = '')
     {
-        $this->publicKey = $file_path;
+        if (!file_exists($file_path)) {
+            return false;
+        }
+        $this->_publicKey = file_get_contents($file_path);
+
+        $len = strlen($this->_publicKey);
+        if ($len == 182) {
+            $this->_block_length = 64;
+        } elseif ($len == 451) {
+            $this->_block_length = 256;
+        } else {
+            $this->_block_length = 128;
+        }
+
         $this->_max_length = $this->_block_length - 11;
     }
 
 
     public function setPrivateKey($file_path = '')
     {
-        $this->privateKey = $file_path;
+        if (!file_exists($file_path)) {
+            return false;
+        }
+        $this->_privateKey = file_get_contents($file_path);
     }
 
 
     public function encrypt($plaintext = '')
     {
-        if (!file_exists($this->publicKey)) {
+        if (!$this->_publicKey) {
             return false;
         }
-        $key = file_get_contents($this->publicKey);
-        $public_key = openssl_get_publickey($key);
+        $public_key = openssl_get_publickey($this->_publicKey);
         $plaintext = str_split($plaintext, $this->_max_length);
         $result = '';
         foreach ($plaintext as $block) {
@@ -49,11 +65,10 @@ class RSA
 
     public function decrypt($data = '')
     {
-        if (!file_exists($this->privateKey)) {
+        if (!$this->_privateKey) {
             return false;
         }
-        $key = file_get_contents($this->privateKey);
-        $private_key = openssl_get_privatekey($key);
+        $private_key = openssl_get_privatekey($this->_privateKey);
         $data = base64_decode($data);
         $data = str_split($data, $this->_block_length);
         $result = '';
