@@ -11,12 +11,16 @@ class RSA
     public $privateKey = '';
 
 
-    private $_block_length = 32;
+    private $_max_length = 32;
+
+
+    private $_block_length = 128; // 默认1024位私钥block=128
 
 
     public function setPublicKey($file_path = '')
     {
         $this->publicKey = $file_path;
+        $this->_max_length = $this->_block_length - 11;
     }
 
 
@@ -33,7 +37,7 @@ class RSA
         }
         $key = file_get_contents($this->publicKey);
         $public_key = openssl_get_publickey($key);
-        $plaintext = str_split($plaintext, $this->_block_length);
+        $plaintext = str_split($plaintext, $this->_max_length);
         $result = '';
         foreach ($plaintext as $block) {
             openssl_public_encrypt($block, $encrypted, $public_key);
@@ -51,7 +55,7 @@ class RSA
         $key = file_get_contents($this->privateKey);
         $private_key = openssl_get_privatekey($key);
         $data = base64_decode($data);
-        $data = str_split($data, 64);
+        $data = str_split($data, $this->_block_length);
         $result = '';
         foreach ($data as $block) {
             openssl_private_decrypt($block, $decrypted, $private_key);
