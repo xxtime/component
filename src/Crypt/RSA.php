@@ -5,7 +5,7 @@ namespace Xxtime\Crypt;
 class RSA
 {
 
-    public $encode = '';    // hex,base64
+    private $encode = '';
 
 
     private $_publicKey;
@@ -46,6 +46,13 @@ class RSA
             return false;
         }
         $this->_privateKey = file_get_contents($file_path);
+    }
+
+
+    // hex, base64
+    public function setEncode($encode_type = '')
+    {
+        $this->encode = $encode_type;
     }
 
 
