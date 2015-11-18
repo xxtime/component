@@ -5,7 +5,7 @@ namespace Xxtime\Crypt;
 class RSA
 {
 
-    public $encode = 'hex';     // base64
+    public $encode = '';    // hex,base64
 
 
     private $_publicKey;
@@ -63,8 +63,10 @@ class RSA
         }
         if ($this->encode == 'hex') {
             return bin2hex($result);
+        } elseif ($this->encode == 'base64') {
+            return base64_encode($result);
         }
-        return base64_encode($result);
+        return $result;
     }
 
 
@@ -76,7 +78,7 @@ class RSA
         $private_key = openssl_get_privatekey($this->_privateKey);
         if ($this->encode == 'hex') {
             $data = hex2bin($data);
-        } else {
+        } elseif ($this->encode == 'base64') {
             $data = base64_decode($data);
         }
         $data = str_split($data, $this->_block_length);
