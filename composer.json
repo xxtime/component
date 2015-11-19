@@ -19,9 +19,9 @@
     },
     "require": {
         "php": ">=5.4.0",
-        "symfony/var-dumper" : "v2.7.*",
-        "symfony/filesystem" : "v2.7.*",
-        "symfony/finder" : "v2.7.*"
+        "symfony/var-dumper" : "2.7.*",
+        "symfony/filesystem" : "2.7.*",
+        "symfony/finder" : "2.7.*"
     },
     "autoload": {
         "files": [ "src/Develop/Debug.php" ],
