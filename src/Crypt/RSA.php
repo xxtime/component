@@ -20,22 +20,24 @@ class RSA
     private $_block_length = 128; // 默认支持1024位私钥
 
 
-    public function setPublicKey($file_path = '')
+    // (file|string) key
+    public function setPublicKey($key = '')
     {
-        if (!file_exists($file_path)) {
-            return false;
-        }
-        $this->_publicKey = file_get_contents($file_path);
-
-        $len = strlen($this->_publicKey);
-        if ($len == 182) {
-            $this->_block_length = 64;
-        } elseif ($len == 451) {
-            $this->_block_length = 256;
+        if (!file_exists($key)) {
+            $this->_publicKey = "-----BEGIN PUBLIC KEY-----\n" . chunk_split($key, 64, "\n") . "-----END PUBLIC KEY-----";
         } else {
-            $this->_block_length = 128;
+            $this->_publicKey = file_get_contents($key);
         }
 
+        $len = strlen($this->_publicKey); // len 182, 272, 451
+
+        if ($len <= 182) {
+            $this->_block_length = 64;
+        } elseif ($len <= 272) {
+            $this->_block_length = 128;
+        } elseif ($len <= 451) {
+            $this->_block_length = 256;
+        }
         $this->_max_length = $this->_block_length - 11;
     }
 
@@ -46,6 +48,24 @@ class RSA
             return false;
         }
         $this->_privateKey = file_get_contents($file_path);
+    }
+
+
+    // string key
+    public function getKeyString($key = '')
+    {
+        if (!file_exists($key)) {
+            return false;
+        }
+        $key = file_get_contents($key);
+        $key = explode("\n", trim($key));
+        array_shift($key);
+        array_pop($key);
+        $result = '';
+        foreach ($key as $v) {
+            $result .= $v;
+        }
+        return $result;
     }
 
 
