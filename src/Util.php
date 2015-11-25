@@ -30,7 +30,7 @@ class Util
             $output = $xml->saveXML();
         } else {
             header("Content-type:application/json");
-            $output = json_encode($data);
+            $output = json_encode($data, JSON_UNESCAPED_UNICODE);
         }
         exit($output);
     }
