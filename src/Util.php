@@ -29,7 +29,7 @@ class Util
             $xml = Array2XML::createXML('xml', $data);
             $output = $xml->saveXML();
         } else {
-            header("Content-type:application/json");
+            header("Content-type:application/json; charset=utf-8");
             $output = json_encode($data, JSON_UNESCAPED_UNICODE);
         }
         exit($output);
