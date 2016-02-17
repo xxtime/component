@@ -3,6 +3,8 @@
 namespace Xxtime\Database;
 
 use PDO;
+use Exception;
+use PDOException;
 
 class MySQL
 {
@@ -39,7 +41,7 @@ class MySQL
 
     function fetchOne($sql = '')
     {
-        $query = $this->db->query($sql);
+        $query = $this->pdoQuery($sql);
         $query->setFetchMode(PDO::FETCH_ASSOC);
         $result = $query->fetch();
         return $result;
@@ -48,7 +50,7 @@ class MySQL
 
     function fetchAll($sql = '')
     {
-        $query = $this->db->query($sql);
+        $query = $this->pdoQuery($sql);
         $query->setFetchMode(PDO::FETCH_ASSOC);
         $result = $query->fetchAll();
         return $result;
@@ -70,6 +72,16 @@ class MySQL
     function lastInsertId()
     {
         return $this->db->lastInsertId();
+    }
+
+
+    private function pdoQuery($sql)
+    {
+        $query = $this->db->query($sql);
+        if ($query === false) {
+            throw new Exception('sql error');
+        }
+        return $query;
     }
 
 }
