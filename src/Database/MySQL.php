@@ -33,8 +33,8 @@ class MySQL
             $this->db = new PDO($dsn, $this->username, $this->password);
             $this->db->query('set names ' . $this->charset);
         } catch (PDOException $e) {
-            exit('database init error');
-            return false;
+            print_r($e->getMessage());
+            exit();
         }
     }
 
@@ -79,7 +79,8 @@ class MySQL
     {
         $query = $this->db->query($sql);
         if ($query === false) {
-            throw new Exception('sql error');
+            print_r($this->db->errorInfo());
+            exit();
         }
         return $query;
     }
