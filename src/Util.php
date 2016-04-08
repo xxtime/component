@@ -36,6 +36,14 @@ class Util
     }
 
 
+    static function filter($param)
+    {
+        $search = array('\\', '/', '"', "'", '%', '=', '(', ')', '<', '>');
+        $replace = array('\\\\', '\\/', '\\"', "\\'", '\\%', '\\=', '\\(', '\\)', '\\<', '\\>');
+        return str_replace($search, $replace, $param);
+    }
+
+
     static function random($length = 8)
     {
         $chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
