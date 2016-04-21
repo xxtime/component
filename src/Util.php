@@ -7,7 +7,7 @@ use Xxtime\Lalit\Array2XML;
 class Util
 {
 
-    static function debug()
+    static public function debug()
     {
         echo "<meta charset='UTF-8'><pre style='padding:20px; background: #000000; color: #FFFFFF;'>\r\n";
         if (func_num_args()) {
@@ -22,7 +22,7 @@ class Util
     }
 
 
-    static function output($data = array(), $format = 'json')
+    static public function output($data = array(), $format = 'json')
     {
         if ($format != 'json') {
             header("Content-type:text/xml");
@@ -36,7 +36,7 @@ class Util
     }
 
 
-    static function filter($param)
+    static public function filter($param)
     {
         $search = array('\\', '/', '"', "'", '%', '=', '(', ')', '<', '>');
         $replace = array('\\\\', '\\/', '\\"', "\\'", '\\%', '\\=', '\\(', '\\)', '\\<', '\\>');
@@ -44,7 +44,7 @@ class Util
     }
 
 
-    static function random($length = 8)
+    static public function random($length = 8)
     {
         $chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
         $string = '';
@@ -56,7 +56,7 @@ class Util
     }
 
 
-    static function create_sign($data = array(), $signKey = '')
+    static public function create_sign($data = array(), $signKey = '')
     {
         ksort($data);
         $string = '';
@@ -67,7 +67,7 @@ class Util
     }
 
 
-    static function write_file($data = '', $file = 'log.log', $append = true)
+    static public function write_file($data = '', $file = 'log.log', $append = true)
     {
         $data = var_export($data, TRUE);
         if (strpos($file, '/') === 0) {
@@ -86,7 +86,7 @@ class Util
     }
 
 
-    static function write_log($text = '', $file = 'log.log')
+    static public function write_log($text = '', $file = 'log.log')
     {
         if (strpos($file, '/') === 0) {
             //return FALSE;
@@ -100,4 +100,45 @@ class Util
     }
 
 
+    static public function export_csv($data = array(), $filePath = '', $fileType = 'csv')
+    {
+        $split = ",";
+        if ($fileType == 'xls') {
+            $split = "\t";
+        }
+        $first = reset($data);
+        $output = implode($split, array_keys($first));
+        $output .= "\r\n";
+        foreach ($data as $value) {
+            $output .= implode($split, array_values($value));
+            $output .= "\r\n";
+        }
+
+        $filePath = self::generateFileName($filePath, true);
+        $fp = fopen($filePath, "w+");
+        fwrite($fp, $output);
+        fclose($fp);
+    }
+
+
+    static private function generateFileName($filePath, $rand = false)
+    {
+        if ($rand) {
+            $rand = date('YmdHis') . mt_rand(1000, 9999);
+        } else {
+            $rand = '';
+        }
+
+        if (strpos($filePath, '/') !== 0) {
+            $filePath = __DIR__ . '/../' . $filePath;
+        }
+        $suffix = strrchr($filePath, '.');
+        if ($suffix) {
+            $newSuffix = $rand . $suffix;
+            $filePath = str_replace($suffix, $newSuffix, $filePath);
+        } else {
+            $filePath = $filePath . $rand;
+        }
+        return $filePath;
+    }
 }
