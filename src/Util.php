@@ -56,7 +56,7 @@ class Util
     }
 
 
-    static public function create_sign($data = array(), $signKey = '')
+    static public function createSign($data = array(), $signKey = '')
     {
         ksort($data);
         $string = '';
@@ -67,7 +67,13 @@ class Util
     }
 
 
-    static public function write_file($data = '', $file = 'log.log', $append = true)
+    static public function create_sign($data = array(), $signKey = '')
+    {
+        return self::createSign($data, $signKey);
+    }
+
+
+    static public function writeFile($data = '', $file = 'log.log', $append = true)
     {
         $data = var_export($data, TRUE);
         if (strpos($file, '/') === 0) {
@@ -86,7 +92,13 @@ class Util
     }
 
 
-    static public function write_log($text = '', $file = 'log.log')
+    static public function write_file($data = '', $file = 'log.log', $append = true)
+    {
+        return self::writeFile($data, $file, $append);
+    }
+
+
+    static public function writeLog($text = '', $file = 'log.log')
     {
         if (strpos($file, '/') === 0) {
             //return FALSE;
@@ -100,7 +112,13 @@ class Util
     }
 
 
-    static public function export_csv($data = array(), $filePath = '', $fileType = 'csv')
+    static public function write_log($text = '', $file = 'log.log')
+    {
+        return self::writeLog($text, $file);
+    }
+
+
+    static public function exportCSV($data = array(), $filePath = '', $fileType = 'csv')
     {
         $split = ",";
         if ($fileType == 'xls') {
