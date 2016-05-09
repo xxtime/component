@@ -157,7 +157,7 @@ class Util
     static private function generateFileName($filePath, $rand = false)
     {
         if (strpos($filePath, '/') !== 0) {
-            $filePath = realpath(__DIR__ . '/../') . '/' . $filePath;
+            $filePath = realpath(__DIR__ . '/../../../../') . '/' . $filePath;
         }
 
         if (!$rand) {
