@@ -118,17 +118,27 @@ class Util
     }
 
 
-    static public function exportCSV($data = array(), $filePath = '', $fileType = 'csv')
+    static public function exportCSV($data = array(), $filePath = '', $headerField = false, $fileType = 'csv')
     {
+        // 文件名
         $filePath = self::generateFileName($filePath, false);
+
+        // 导出类型
         $split = ",";
         if ($fileType == 'xls') {
             $split = "\t";
         }
-        $first = reset($data);
-        $output = implode($split, array_keys($first));
-        $output .= "\r\n";
 
+        // 表头
+        if ($headerField) {
+            $first = reset($data);
+            $output = implode($split, array_keys($first));
+            $output .= "\r\n";
+        } else {
+            $output = '';
+        }
+
+        // 分割写入
         $skip = 1000;
         $max = count($data);
         $fp = fopen($filePath, "a+");
