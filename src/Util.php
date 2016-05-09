@@ -120,6 +120,7 @@ class Util
 
     static public function exportCSV($data = array(), $filePath = '', $fileType = 'csv')
     {
+        $filePath = self::generateFileName($filePath, false);
         $split = ",";
         if ($fileType == 'xls') {
             $split = "\t";
@@ -127,14 +128,18 @@ class Util
         $first = reset($data);
         $output = implode($split, array_keys($first));
         $output .= "\r\n";
-        foreach ($data as $value) {
+
+        $skip = 1000;
+        $max = count($data);
+        $fp = fopen($filePath, "a+");
+        foreach ($data as $key => $value) {
             $output .= implode($split, array_values($value));
             $output .= "\r\n";
+            if ((($key != 0) && ($key % $skip == 0)) || ($max == $key + 1)) {
+                fwrite($fp, $output);
+                $output = '';
+            }
         }
-
-        $filePath = self::generateFileName($filePath, false);
-        $fp = fopen($filePath, "w+");
-        fwrite($fp, $output);
         fclose($fp);
     }
 
