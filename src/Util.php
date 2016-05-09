@@ -132,7 +132,7 @@ class Util
             $output .= "\r\n";
         }
 
-        $filePath = self::generateFileName($filePath, true);
+        $filePath = self::generateFileName($filePath, false);
         $fp = fopen($filePath, "w+");
         fwrite($fp, $output);
         fclose($fp);
@@ -141,15 +141,15 @@ class Util
 
     static private function generateFileName($filePath, $rand = false)
     {
-        if ($rand) {
-            $rand = date('YmdHis') . mt_rand(1000, 9999);
-        } else {
-            $rand = '';
+        if (strpos($filePath, '/') !== 0) {
+            $filePath = realpath(__DIR__ . '/../') . '/' . $filePath;
         }
 
-        if (strpos($filePath, '/') !== 0) {
-            $filePath = __DIR__ . '/../' . $filePath;
+        if (!$rand) {
+            return $filePath;
         }
+
+        $rand = date('YmdHis') . mt_rand(1000, 9999);
         $suffix = strrchr($filePath, '.');
         if ($suffix) {
             $newSuffix = $rand . $suffix;
