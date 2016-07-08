@@ -56,6 +56,20 @@ class Util
     }
 
 
+    static public function guid()
+    {
+        mt_srand((double)microtime() * 10000);
+        $charID = strtoupper(md5(uniqid(mt_rand(), true)));
+        $hyphen = chr(45); // "-"
+        $uuid = substr($charID, 0, 8) . $hyphen
+            . substr($charID, 8, 4) . $hyphen
+            . substr($charID, 12, 4) . $hyphen
+            . substr($charID, 16, 4) . $hyphen
+            . substr($charID, 20, 12);
+        return $uuid;
+    }
+
+
     static public function createSign($data = array(), $signKey = '', $as = '=', $di = '&')
     {
         ksort($data);
