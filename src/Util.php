@@ -89,7 +89,7 @@ class Util
 
     static public function writeFile($data = '', $file = 'log.log', $append = true)
     {
-        $data = var_export($data, TRUE);
+        //$data = var_export($data, TRUE);
         if (strpos($file, '/') === 0) {
             //return FALSE;
         } else {
