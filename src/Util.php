@@ -44,6 +44,7 @@ class Util
     }
 
 
+    // 随机字符串
     static public function random($length = 8)
     {
         $chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
@@ -56,6 +57,7 @@ class Util
     }
 
 
+    // 创建GUID
     static public function guid()
     {
         mt_srand((double)microtime() * 10000);
@@ -70,6 +72,17 @@ class Util
     }
 
 
+    // 创建订单ID
+    static public function createBillNo($uid = 0, $app = 0)
+    {
+        $main = str_pad(substr($app, -2), 2, '0', STR_PAD_LEFT) . str_pad(substr($uid, -4), 4, '0', STR_PAD_LEFT);
+        $main .= date('ymdHis') . mt_rand(100000, 999999);
+        $cc = strtoupper(substr(sha1($main), -2));
+        return $main . $cc;
+    }
+
+
+    // 创建签名
     static public function createSign($data = array(), $signKey = '', $as = '=', $di = '&')
     {
         ksort($data);
@@ -87,6 +100,7 @@ class Util
     }
 
 
+    // 写文件
     static public function writeFile($data = '', $file = 'log.log', $append = true)
     {
         //$data = var_export($data, TRUE);
@@ -112,6 +126,7 @@ class Util
     }
 
 
+    // 写日志
     static public function writeLog($text = '', $file = 'log.log')
     {
         if (strpos($file, '/') === 0) {
@@ -132,6 +147,7 @@ class Util
     }
 
 
+    // 导出CSV
     static public function exportCSV($data = array(), $filePath = '', $headerField = false, $fileType = 'csv')
     {
         // 文件名
@@ -168,6 +184,7 @@ class Util
     }
 
 
+    // 生成文件名
     static private function generateFileName($filePath, $rand = false)
     {
         if (strpos($filePath, '/') !== 0) {
