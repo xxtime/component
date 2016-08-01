@@ -73,12 +73,13 @@ class Util
 
 
     // 创建订单ID
-    static public function createBillNo($uid = 0, $app = 0)
+    static public function createBillNo($sequence = 0, $uid = 0, $app = 0)
     {
-        $main = str_pad(substr($app, -2), 2, '0', STR_PAD_LEFT) . str_pad(substr($uid, -4), 4, '0', STR_PAD_LEFT);
-        $main .= date('ymdHis') . mt_rand(100000, 999999);
-        $cc = strtoupper(substr(sha1($main), -2));
-        return $main . $cc;
+        $main = str_pad(substr($app, -2), 2, '0', STR_PAD_LEFT) . str_pad(substr($uid, -2), 2, '0', STR_PAD_LEFT);
+        $sequence = str_pad($sequence, 6, '0', STR_PAD_LEFT);
+        $rand = str_pad(mt_rand(0, 9999), 4, '0', STR_PAD_LEFT);
+        $main .= date('YmdHi') . substr($sequence, 0, 3) . substr($rand, 0, 2) . substr($sequence, 3, 3) . substr($rand, 2, 2);
+        return $main;
     }
 
 
