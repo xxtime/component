@@ -79,7 +79,10 @@ class MySQL
     {
         $query = $this->db->query($sql);
         if ($query === false) {
+            echo "=====<<\r\n";
             print_r($this->db->errorInfo());
+            echo $sql;
+            echo "\r\n=====<<\r\n";
             exit();
         }
         return $query;
