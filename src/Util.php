@@ -75,13 +75,13 @@ class Util
     // 创建订单ID
     static public function createTransaction($sequence = 0, $code = 0)
     {
-        $main = '';
+        $main = date('YmdHi');
         if ($code) {
-            $main = str_pad(substr($code, -2), 2, '0', STR_PAD_LEFT);
+            $main .= str_pad(substr($code, -2), 2, '0', STR_PAD_LEFT);
         }
         $sequence = str_pad($sequence, 6, '0', STR_PAD_LEFT);
-        $rand = str_pad(mt_rand(0, 9999), 4, '0', STR_PAD_LEFT);
-        $main .= date('YmdHi') . substr($sequence, -3, 3) . substr($rand, 0, 2) . substr($sequence, -6, 3) . substr($rand, 2, 2);
+        $rand = str_pad(mt_rand(0, 999999), 6, '0', STR_PAD_LEFT);
+        $main .= substr($sequence, -3, 3) . substr($rand, 0, 3) . substr($sequence, -6, 3) . substr($rand, 3, 3);
         return $main;
     }
 
