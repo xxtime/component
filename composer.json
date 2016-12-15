@@ -1,32 +1,37 @@
 {
-    "name": "xxtime/component",
-    "type": "library",
-    "description": "xxtime component",
-    "keywords": ["xxtime", "uacool", "component"],
-    "homepage": "https://github.com/xxtime/component",
-    "license": "MIT",
-    "authors": [
-        {
-            "name": "Joe Chu",
-            "email": "joe@xxtime.com",
-            "homepage": "http://www.xxtime.com",
-            "role": "Developer"
-        }
-    ],
-    "support": {
-        "email": "joe@xxtime.com",
-        "wiki": "http://wiki.xxtime.com"
-    },
-    "require": {
-        "php": ">=5.5.0",
-        "symfony/var-dumper" : "2.8.*",
-        "symfony/filesystem" : "2.8.*",
-        "symfony/finder" : "2.8.*",
-        "symfony/http-foundation" : "2.8.*",
-        "illuminate/database": "5.2.*"
-    },
-    "autoload": {
-        "files": [ "src/Develop/Debug.php" ],
-        "psr-4": {"Xxtime\\": "src/"}
+  "name": "xxtime/component",
+  "type": "library",
+  "description": "xxtime component",
+  "keywords": [
+    "xxtime",
+    "component"
+  ],
+  "homepage": "https://github.com/xxtime/component",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Joe Chu",
+      "email": "joe@xxtime.com",
+      "homepage": "http://www.xxtime.com",
+      "role": "Developer"
     }
+  ],
+  "support": {
+    "email": "joe@xxtime.com",
+    "wiki": "http://wiki.xxtime.com"
+  },
+  "require": {
+    "php": ">=5.5.0",
+    "symfony/var-dumper": "~2|~3",
+    "symfony/http-foundation": "~2|~3",
+    "illuminate/database": "~5"
+  },
+  "autoload": {
+    "files": [
+      "src/Develop/Debug.php"
+    ],
+    "psr-4": {
+      "Xxtime\\": "src/"
+    }
+  }
 }
